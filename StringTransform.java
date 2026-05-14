@@ -2,6 +2,7 @@ import java.util.*;
 
 public class StringTransform {
 
+    // Store word state and distance from start
     static class State {
         String word;
         int steps;
@@ -21,8 +22,11 @@ public class StringTransform {
 
         char[] chars = { 'A', 'B', 'C' };
 
+        // BFS to find shortest path and count all shortest paths
         Queue<State> q = new LinkedList<>();
 
+        // dist: shortest distance to each word, ways: number of paths to reach each
+        // word
         Map<String, Integer> dist = new HashMap<>();
         Map<String, Integer> ways = new HashMap<>();
 
@@ -48,25 +52,31 @@ public class StringTransform {
 
                     String next = new String(arr);
 
+                    // Skip if consecutive C's (constraint)
                     if (next.contains("CC"))
                         continue;
 
                     if (!dist.containsKey(next)) {
-
+                        // New shortest path found
                         dist.put(next, dist.get(word) + 1);
                         ways.put(next, ways.get(word));
 
                         q.add(new State(next, dist.get(next)));
-                    }
-
-                    else if (dist.get(next) == dist.get(word) + 1) {
-
+                    } else if (dist.get(next) == dist.get(word) + 1) {
+                        // Another path of same length found
                         ways.put(next, ways.get(next) + ways.get(word));
                     }
                 }
             }
         }
-        System.out.println("Length: " + dist.get(end));
-        System.out.println("Paths: " + ways.get(end));
+
+        // Check if end string is reachable
+        if (!dist.containsKey(end)) {
+            System.out.println("Length: -1");
+            System.out.println("Paths: 0");
+        } else {
+            System.out.println("Length: " + dist.get(end));
+            System.out.println("Paths: " + ways.get(end));
+        }
     }
 }

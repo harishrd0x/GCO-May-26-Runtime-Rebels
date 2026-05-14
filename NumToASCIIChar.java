@@ -2,17 +2,27 @@ public class NumToASCIIChar {
 
     public static void main(String[] args) {
 
+        // Parse dash-separated ASCII codes and convert to characters
         String str = "72-101-108-108-111";
         String[] nums = str.split("-");
 
         String output = "";
 
-        for (int i = 0; i < nums.length; i++) {
+        try {
+            for (int i = 0; i < nums.length; i++) {
+                int n = Integer.parseInt(nums[i]);
 
-            int n = Integer.parseInt(nums[i]);
-            output += (char) n;
+                // Validate ASCII range (0-127)
+                if (n < 0 || n > 127) {
+                    System.out.println("Error: Invalid ASCII code " + n);
+                    return;
+                }
+
+                output += (char) n;
+            }
+            System.out.println(output);
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Invalid number format in input");
         }
-
-        System.out.println(output);
     }
 }

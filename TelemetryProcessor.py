@@ -9,6 +9,7 @@ while True:
     if line == "":
         break
 
+    # Validate format: 3 numbers separated by space, comma, or comma+space
     valid = (
         line.count(" ") == 2 and "," not in line
     ) or (
@@ -21,6 +22,7 @@ while True:
         continue
 
     try:
+        # Parse based on delimiter type
         if ", " in line:
             nums = line.split(", ")
         elif "," in line:
@@ -33,6 +35,7 @@ while True:
 
         a, b, c = map(int, nums)
 
+        # Calculate GCD of three numbers
         g = math.gcd(math.gcd(a, b), c)
 
         total += g
